@@ -1,0 +1,48 @@
+table {
+    margin: 0 auto;
+    border-spacing: 4px;
+}
+
+td {
+    border: 1px solid black;
+}
+
+.wordle_input {
+    height: 50px;
+    width: 50px; 
+    border: none;
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--default-brighter-color)
+}
+
+.status_input {
+    /* height: 50px; */
+    width: 50px; 
+    border: none;
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.unknown {
+    color: var(--default-dark-color);
+}
+
+.correct {
+    background-color: #70B961;
+    color: var(--default-brighter-color);
+
+}
+
+.wrong {
+    background-color: #707070;
+    color: var(--default-brighter-color);
+
+}
+
+.different_position {
+    background-color: #C4B464;
+    color: var(--default-brighter-color);
+} 
