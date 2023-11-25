@@ -1,3 +1,7 @@
+header {
+    margin: 15px auto;
+}
+
 h1, p {
     text-align: center;
 }
