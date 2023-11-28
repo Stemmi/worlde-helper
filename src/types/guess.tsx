@@ -1,7 +1,7 @@
+export type Status = 'unknown' | 'correct' | 'wrong' | 'different_position';
+
 export interface Guess {
     id: number,
     letter: string,
-    status: 'unknown' | 'correct' | 'wrong' | 'different_position'
+    status: Status
 }
-
-export type Status = 'unknown' | 'correct' | 'wrong' | 'different_position';
