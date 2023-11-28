@@ -5,14 +5,11 @@ import { ChangeEvent } from '../types/events';
 
 interface LetterInputProps {
     guess: Guess
-    inputRef: React.MutableRefObject<null>
-    // isSelected: boolean
+    // inputRef: React.MutableRefObject<null>
     onLetterChange: (id: number, letter: string) => void
 }
 
-export default function LetterInput({ guess, inputRef, onLetterChange }: LetterInputProps) {
-    // const inputRef = useRef(null);
-
+export default function LetterInput({ guess, onLetterChange }: LetterInputProps) {
     function handleChange(event: ChangeEvent) {
         event.preventDefault();
         onLetterChange(guess.id, event.target.value);
@@ -20,11 +17,8 @@ export default function LetterInput({ guess, inputRef, onLetterChange }: LetterI
         // select next
     }
 
-    // if (isSelected) inputRef.current.focus();
-
     return (
         <input
-            ref={inputRef}
             type="text"
             size={1}
             className={"wordle_input "+guess.status}
