@@ -26,6 +26,7 @@ export default function LetterInput({ guess, onLetterChange }: LetterInputProps)
     return (
         <input
             ref={inputRef}
+            autoFocus={guess.id===0}
             type="text"
             size={1}
             className={"wordle_input "+guess.status}
