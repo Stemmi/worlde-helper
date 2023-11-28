@@ -1,7 +1,6 @@
 // import { Status } from '../types/guess';
 import { useRef } from 'react';
 import { Guess } from '../types/guess';
-import { ChangeEvent } from '../types/events';
 
 interface LetterInputProps {
     guess: Guess
@@ -12,7 +11,7 @@ interface LetterInputProps {
 export default function LetterInput({ guess, onLetterChange }: LetterInputProps) {
     const inputRef = useRef<HTMLInputElement>(null);
     
-    function handleChange(event: ChangeEvent) {
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         event.preventDefault();
         onLetterChange(guess.id, event.target.value);
         // event.target.blur();
