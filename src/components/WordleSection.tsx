@@ -16,11 +16,11 @@ const defaultGuess: Guess[] = [
 export default function WordleSection() {    
     const [ guessedWord, setGuessedWord ] = useState(defaultGuess);
     const inputRefs = [
-        useRef<HTMLInputElement>(null),
-        useRef<HTMLInputElement>(null),
-        useRef<HTMLInputElement>(null),
-        useRef<HTMLInputElement>(null),
-        useRef<HTMLInputElement>(null)    
+        useRef<HTMLElement>(null),
+        useRef<HTMLElement>(null),
+        useRef<HTMLElement>(null),
+        useRef<HTMLElement>(null),
+        useRef<HTMLElement>(null)    
     ];
 
     function handleLetterChange(id: number, letter: string) {
@@ -28,18 +28,14 @@ export default function WordleSection() {
         newGuessedWord[id].letter = letter.toUpperCase();
         setGuessedWord(newGuessedWord);
         console.log(guessedWord);
-    }
-
-    function handleChange(id: number) {
-        console.log(id)
-        inputRefs[id].current?.focus();
+        const focusId = id < 4 ? id + 1 : 0;
+        inputRefs[focusId].current?.focus();
     }
 
     const guessLettersRow = guessedWord.map((guess) => 
         <td key={guess.id}>
-            <input ref={inputRefs[guess.id]} onChange={() => handleChange(guess.id < 4 ? guess.id + 1 : 0)}></input>
             <LetterInput
-                
+                ref={inputRefs[guess.id]}
                 guess={guess}
                 onLetterChange={handleLetterChange}
             />

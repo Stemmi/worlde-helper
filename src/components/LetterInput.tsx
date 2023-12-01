@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { forwardRef } from 'react';
 import { Guess } from '../types/guess';
 
 interface LetterInputProps {
@@ -6,23 +6,17 @@ interface LetterInputProps {
     onLetterChange: (id: number, letter: string) => void
 }
 
-export default function LetterInput({ guess, onLetterChange }: LetterInputProps) {
-    const inputRef = useRef<HTMLInputElement>(null);
-    
+const LetterInput = forwardRef(({ guess, onLetterChange }: LetterInputProps, ref) => {
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         event.preventDefault();
         onLetterChange(guess.id, event.target.value);
         // event.target.blur();
         // select next
     }
-
-    function handleHover() {
-        inputRef.current?.focus();
-    }
-
+    
     return (
         <input
-            ref={inputRef}
+            ref={ref}
             autoFocus={guess.id===0}
             type="text"
             size={1}
@@ -30,7 +24,10 @@ export default function LetterInput({ guess, onLetterChange }: LetterInputProps)
             // placeholder={guess.letter}
             value={guess.letter}
             onChange={handleChange}
-            onMouseEnter={handleHover} // remove
         />
     )
-}
+    
+    // return <input {...props} ref={ref} />;
+});
+
+export default LetterInput;
