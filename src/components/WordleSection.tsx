@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import './WordleSection.css';
 import LetterInput from './LetterInput';
 import StatusInput from './StatusInput';
@@ -15,6 +15,13 @@ const defaultGuess: Guess[] = [
 
 export default function WordleSection() {    
     const [ guessedWord, setGuessedWord ] = useState(defaultGuess);
+    const inputRefs = [
+        useRef<HTMLInputElement>(null),
+        useRef<HTMLInputElement>(null),
+        useRef<HTMLInputElement>(null),
+        useRef<HTMLInputElement>(null),
+        useRef<HTMLInputElement>(null)    
+    ];
 
     function handleLetterChange(id: number, letter: string) {
         const newGuessedWord = [...guessedWord];
@@ -23,9 +30,16 @@ export default function WordleSection() {
         console.log(guessedWord);
     }
 
+    function handleChange(id: number) {
+        console.log(id)
+        inputRefs[id].current?.focus();
+    }
+
     const guessLettersRow = guessedWord.map((guess) => 
         <td key={guess.id}>
+            <input ref={inputRefs[guess.id]} onChange={() => handleChange(guess.id < 4 ? guess.id + 1 : 0)}></input>
             <LetterInput
+                
                 guess={guess}
                 onLetterChange={handleLetterChange}
             />

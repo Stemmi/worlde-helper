@@ -1,10 +1,8 @@
-// import { Status } from '../types/guess';
 import { useRef } from 'react';
 import { Guess } from '../types/guess';
 
 interface LetterInputProps {
     guess: Guess
-    // inputRef: React.MutableRefObject<null>
     onLetterChange: (id: number, letter: string) => void
 }
 
