@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Guess } from '../types/guess';
 
 interface LetterInputProps {
@@ -6,27 +6,34 @@ interface LetterInputProps {
     isSelected: boolean
     onLetterChange: (id: number, letter: string) => void
     onSelect: (id: number) => void
+    onDeselect: (id: number) => void
 }
 
-export default function LetterInput({ guess, isSelected, onLetterChange, onSelect }: LetterInputProps) {
+export default function LetterInput({ guess, isSelected, onLetterChange, onSelect, onDeselect }: LetterInputProps) {
     const inputReference = useRef<HTMLInputElement>(null);
+    const [ inputValue, setInputValue ] = useState(guess.letter);
     
     useEffect(() => {
         if (isSelected) {
             inputReference.current?.focus();
+            setInputValue('');
+        } else {
+            inputReference.current?.blur();
+            setInputValue(guess.letter);
         }
-    }, [isSelected])
+    }, [isSelected, guess.letter])
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         event.preventDefault();
         onLetterChange(guess.id, event.target.value);
-        // event.target.blur();
-        // select next
     }
 
-    function handleClick(event: React.MouseEvent<HTMLInputElement>) {
-        event.preventDefault();
+    function handleFocus() {
         onSelect(guess.id);
+    }
+
+    function handleBlur() {
+        onDeselect(guess.id);
     }
     
     return (
@@ -35,10 +42,11 @@ export default function LetterInput({ guess, isSelected, onLetterChange, onSelec
             type="text"
             size={1}
             className={"wordle_input "+guess.status}
-            placeholder={isSelected ? guess.letter : ""}
-            value={isSelected ? "" : guess.letter}
+            placeholder={guess.letter}
+            value={inputValue}
             onChange={handleChange}
-            onClick={handleClick}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
         />
     )
 }

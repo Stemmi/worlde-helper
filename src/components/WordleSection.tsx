@@ -2,55 +2,72 @@ import { useState } from 'react';
 import './WordleSection.css';
 import LetterInput from './LetterInput';
 import StatusInput from './StatusInput';
-import { Guess } from '../types/guess';
-// import { ChangeEvent } from '../types/events';
+import { Guess, Status } from '../types/guess';
 
 const defaultGuess: Guess[] = [
     { id: 0, letter: '', status: 'unknown' },
-    { id: 1, letter: '', status: 'wrong' },
-    { id: 2, letter: '', status: 'correct' },
-    { id: 3, letter: '', status: 'different_position' },
+    { id: 1, letter: '', status: 'unknown' },
+    { id: 2, letter: '', status: 'unknown' },
+    { id: 3, letter: '', status: 'unknown' },
     { id: 4, letter: '', status: 'unknown' }
 ];
 
 export default function WordleSection() {    
     const [ guessedWord, setGuessedWord ] = useState(defaultGuess);
-    const [ selectedInput, setSelectedInput ] = useState(0);
+    const [ selectedInput, setSelectedInput ] = useState<number | undefined>(0);
 
     function handleLetterChange(id: number, letter: string) {
+        const pattern = /[a-zA-Z]/;
+        if (!pattern.test(letter)) return;
         const newGuessedWord = [...guessedWord];
         newGuessedWord[id].letter = letter.toUpperCase();
         selectNext();
-
         setGuessedWord(newGuessedWord);
-        // const focusId = id < 4 ? id + 1 : 0;
     }
 
     function selectNext() {
-        const nextInput = selectedInput >= 4 ? 0 : selectedInput + 1;
-        console.log('nextInput', nextInput)
-        setSelectedInput(nextInput);
+        if (selectedInput === undefined) {
+            return;
+        } else if (selectedInput >= 4) {
+            setSelectedInput(undefined);
+        } else {
+            const nextInput = selectedInput + 1;
+            setSelectedInput(nextInput);
+        }
     }
 
     function handleSelection(id: number) {
-        console.log('selected '+id);
         setSelectedInput(id);
     }
 
+    function handleDeselection(id: number) {
+        if (selectedInput === id) setSelectedInput(undefined);
+    }
+
+    function handleStatusChange(id: number, status: Status) {
+        const newGuessedWord = [...guessedWord];
+        newGuessedWord[id].status = status;
+        setGuessedWord(newGuessedWord);
+    }
+
     const guessLettersRow = guessedWord.map((guess) => 
-        <td key={guess.id} autoFocus>
+        <td key={guess.id}>
             <LetterInput
                 isSelected={selectedInput===guess.id}
                 guess={guess}
                 onLetterChange={handleLetterChange}
                 onSelect={handleSelection}
+                onDeselect={handleDeselection}
             />
         </td>
     );
 
     const guessStatusRow = guessedWord.map((guess) => 
         <td key={guess.id}>
-            <StatusInput id={guess.id} />
+            <StatusInput
+                id={guess.id}
+                onStatusChange={handleStatusChange}
+            />
         </td>
     );
 
