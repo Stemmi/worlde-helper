@@ -13,13 +13,13 @@ const defaultGuess: Guess[] = [
 ];
 
 export default function WordleSection() {    
-    const [ guessedWord, setGuessedWord ] = useState(defaultGuess);
+    const [ guessedWord, setGuessedWord ] = useState(defaultGuess.map(obj => ({...obj})));
     const [ selectedInput, setSelectedInput ] = useState<number | undefined>(0);
 
     function handleLetterChange(id: number, letter: string) {
         const pattern = /[a-zA-Z]/;
         if (!pattern.test(letter)) return;
-        const newGuessedWord = [...guessedWord];
+        const newGuessedWord = guessedWord.map(obj => ({...obj}));
         newGuessedWord[id].letter = letter.toUpperCase();
         selectNext();
         setGuessedWord(newGuessedWord);
@@ -45,9 +45,19 @@ export default function WordleSection() {
     }
 
     function handleStatusChange(id: number, status: Status) {
-        const newGuessedWord = [...guessedWord];
+        const newGuessedWord = guessedWord.map(obj => ({...obj}));
         newGuessedWord[id].status = status;
         setGuessedWord(newGuessedWord);
+    }
+
+    function handleOk() { 
+        return;
+    }
+
+    function handleReset() {
+        const resettedGuess = defaultGuess.map(obj => ({...obj}));
+        setGuessedWord(resettedGuess);
+        setSelectedInput(0);
     }
 
     const guessLettersRow = guessedWord.map((guess) => 
@@ -81,6 +91,10 @@ export default function WordleSection() {
                     {guessStatusRow}
                 </tr>
             </tbody></table>
+            <div className="button_container">
+                <button onClick={handleOk}>OK</button>
+                <button onClick={handleReset} >Reset</button>
+            </div>
         </section>
     )
 }

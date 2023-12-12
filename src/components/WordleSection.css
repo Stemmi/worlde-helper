@@ -46,3 +46,25 @@ td {
     background-color: #C4B464;
     color: var(--default-brighter-color);
 } 
+
+.button_container {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    background-color: #cbd8f0;
+    border: none;
+    border-radius: 50px;
+    padding: 6px 15px;
+    margin: 5px;
+    font-size: 1.1em;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+button:active {
+    background-color:white;
+}
