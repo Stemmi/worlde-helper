@@ -1,20 +1,15 @@
 import { useState } from 'react';
 import './WordleSection.css';
-import LetterInput from './LetterInput';
-import StatusInput from './StatusInput';
-import { Guess, Status } from '../types/guess';
-
-const defaultGuess: Guess[] = [
-    { id: 0, letter: '', status: 'unknown' },
-    { id: 1, letter: '', status: 'unknown' },
-    { id: 2, letter: '', status: 'unknown' },
-    { id: 3, letter: '', status: 'unknown' },
-    { id: 4, letter: '', status: 'unknown' }
-];
+import WordleTable from './WordleTable';
+import ResultDiv from './ResultDiv';
+import { Status } from '../types/guess';
+import { findWords } from '../services/wordService';
+import { defaultGuess } from '../data/defaults';
 
 export default function WordleSection() {    
     const [ guessedWord, setGuessedWord ] = useState(defaultGuess.map(obj => ({...obj})));
     const [ selectedInput, setSelectedInput ] = useState<number | undefined>(0);
+    const [ result, setresult ] = useState<string[]>([]);
 
     function handleLetterChange(id: number, letter: string) {
         const pattern = /[a-zA-Z]/;
@@ -36,12 +31,8 @@ export default function WordleSection() {
         }
     }
 
-    function handleSelection(id: number) {
+    function handleSelection(id: number | undefined) {
         setSelectedInput(id);
-    }
-
-    function handleDeselection(id: number) {
-        if (selectedInput === id) setSelectedInput(undefined);
     }
 
     function handleStatusChange(id: number, status: Status) {
@@ -51,50 +42,29 @@ export default function WordleSection() {
     }
 
     function handleOk() { 
-        return;
+        setresult(findWords(guessedWord))
     }
 
     function handleReset() {
         const resettedGuess = defaultGuess.map(obj => ({...obj}));
         setGuessedWord(resettedGuess);
-        setSelectedInput(0);
+        setSelectedInput(0);    
     }
-
-    const guessLettersRow = guessedWord.map((guess) => 
-        <td key={guess.id}>
-            <LetterInput
-                isSelected={selectedInput===guess.id}
-                guess={guess}
-                onLetterChange={handleLetterChange}
-                onSelect={handleSelection}
-                onDeselect={handleDeselection}
-            />
-        </td>
-    );
-
-    const guessStatusRow = guessedWord.map((guess) => 
-        <td key={guess.id}>
-            <StatusInput
-                id={guess.id}
-                onStatusChange={handleStatusChange}
-            />
-        </td>
-    );
 
     return (
         <section>
-            <table><tbody>
-                <tr>
-                    {guessLettersRow}
-                </tr>
-                <tr>
-                    {guessStatusRow}
-                </tr>
-            </tbody></table>
+            <WordleTable
+                guessedWord={guessedWord}
+                selectedInput={selectedInput}
+                onLetterChange={handleLetterChange}
+                onInputSelection={handleSelection}
+                onStatuschange={handleStatusChange}
+            />
             <div className="button_container">
                 <button onClick={handleOk}>OK</button>
                 <button onClick={handleReset} >Reset</button>
             </div>
+            <ResultDiv result={result} />
         </section>
     )
 }

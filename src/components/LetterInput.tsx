@@ -41,6 +41,7 @@ export default function LetterInput({ guess, isSelected, onLetterChange, onSelec
             ref={inputReference}
             type="text"
             size={1}
+            maxLength={1}
             className={"wordle_input "+guess.status}
             placeholder={guess.letter}
             value={inputValue}

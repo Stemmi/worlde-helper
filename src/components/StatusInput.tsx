@@ -2,10 +2,11 @@ import { Status } from "../types/guess"
 
 interface StatusInputProps {
     id: number,
+    status: Status,
     onStatusChange: (id: number, status: Status) => void
 }
 
-export default function StatusInput({ id, onStatusChange }: StatusInputProps) {    
+export default function StatusInput({ id, status, onStatusChange }: StatusInputProps) {    
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         onStatusChange(id, event.target.value as Status)
     }
@@ -19,6 +20,7 @@ export default function StatusInput({ id, onStatusChange }: StatusInputProps) {
                     id="correct"
                     name={"guess_status"+id}
                     value="correct"
+                    checked={status==='correct'}
                     onChange={(handleChange)}
                 />
             </span><br />
@@ -29,6 +31,7 @@ export default function StatusInput({ id, onStatusChange }: StatusInputProps) {
                     id="different_position"
                     name={"guess_status"+id}
                     value="different_position"
+                    checked={status==='different_position'}
                     onChange={(handleChange)}
                 />
             </span><br />
@@ -39,6 +42,7 @@ export default function StatusInput({ id, onStatusChange }: StatusInputProps) {
                     id="wrong"
                     name={"guess_status"+id}
                     value="wrong"
+                    checked={status==='wrong'}
                     onChange={(handleChange)}
                 />
             </span>

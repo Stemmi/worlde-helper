@@ -68,3 +68,8 @@ button:hover {
 button:active {
     background-color:white;
 }
+
+li {
+    list-style-type: none;
+}
+
