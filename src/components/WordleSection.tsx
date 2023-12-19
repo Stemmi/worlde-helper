@@ -9,7 +9,7 @@ import { defaultGuess } from '../data/defaults';
 export default function WordleSection() {    
     const [ guessedWord, setGuessedWord ] = useState(defaultGuess.map(obj => ({...obj})));
     const [ selectedInput, setSelectedInput ] = useState<number | undefined>(0);
-    const [ result, setresult ] = useState<string[]>([]);
+    const [ result, setResult ] = useState<string[]>([]);
 
     function handleLetterChange(id: number, letter: string) {
         const pattern = /[a-zA-Z]/;
@@ -42,13 +42,14 @@ export default function WordleSection() {
     }
 
     function handleOk() { 
-        setresult(findWords(guessedWord))
+        setResult(findWords(guessedWord));
     }
 
     function handleReset() {
         const resettedGuess = defaultGuess.map(obj => ({...obj}));
         setGuessedWord(resettedGuess);
-        setSelectedInput(0);    
+        setSelectedInput(0);
+        setResult([]);
     }
 
     return (
