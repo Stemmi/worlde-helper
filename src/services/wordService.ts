@@ -2,77 +2,54 @@ import { words } from '../data/words';
 import { Guess } from '../types/guess';
 
 function findWords(guessedWord: Guess[]) {
-    const allWords = [...words];
-    console.log('words @ start', allWords);
-
-    const filteredCorrect = filterCorrectLetters(allWords, guessedWord) // returns object: {remainingWords, guess}
-    // const filteredDiffPos = filterDifferentPositionLetters(filteredCorrect.remainingWords, filteredCorrect.guess)
-    // const filteredWrong = filterWrongLetters(filteredDiffPos.remainingWords, filteredDiffPos.guess)
-    // return filteredWrong.remainingWords;    
-    
-    const result = filteredCorrect.remainingWords;
-
-    // let result = [...words];
-    // console.log('result @ start', result);
-    // console.log('guessedWord', guessedWord);
-    // const correctLetters = guessedWord.filter(letter => letter.status === 'correct');
-    // correctLetters.forEach(correctLetter => {
-    //     const foundWords = result.filter(word => word[correctLetter.id] === correctLetter.letter);
-    //     result = foundWords;
-    //     guessedWord[correctLetter.id].used = true;
-    //     // console.log(guessedWord);
-    
-    // });
-    // console.log('result after filtering correct letters', result);
-    // console.log('correctLetters', correctLetters);
-
-    // Check for “different position”:
-    // Create an array „differentPosition”
-    // const differentPositionLetters = guessedWord.filter(letter => letter.status === 'different_position');
-    // differentPositionLetters;
-    
-    // for (const word of result) {
-    //     word;
-    // }
-
-    // Check for each guess of this array:
-    // Does the word have the guessed letter at this position? à discard word
-    // Does the word have the guessed letter at any other position that is not already used?
-    // If not: à discard word.
-    // If yes: Mark that position as used and move to the next dp-position.
-    // After the last position: keep the word.
-    
-    // Check for “wrong”:
-    // Create an array “wrong”.
-    // Check for each guess of that array:
-    // Does it have this letter at any unused position?
-    // If yes, discard word.
-    // Else, keep.
-
-
-    console.log('final result', result);
-   
-    return result;
+    return words.filter(word => checkCorrectGuesses(word, guessedWord)
+                                && checkIncorrectGuesses(word, guessedWord));
 }
 
-function filterCorrectLetters(words: string[], guessedWord: Guess[]) {
-    let remainingWords = [...words];
-    const guess: Guess[] = JSON.parse(JSON.stringify(guessedWord));
-
-    const correctLetters = guess.filter(letter => letter.status === 'correct');
-    correctLetters.forEach(correctLetter => {
-        const foundWords = remainingWords.filter(word => word[correctLetter.id] === correctLetter.letter);
-        remainingWords = foundWords;
-        guess[correctLetter.id].used = true;
-        // console.log(guessedWord);
-    
-    });
-
-    return {
-        remainingWords,
-        guess
+function checkCorrectGuesses(word: string, guessedWord: Guess[]) {
+    const correctGuesses = guessedWord.filter(guess => guess.status === 'correct');
+    for (const correctGuess of correctGuesses) {
+        if (word[correctGuess.id] !== correctGuess.letter) {
+            return false;
+        }
     }
+    return true;
 }
 
+function checkIncorrectGuesses(word: string, guessedWord: Guess[]) {
+    console.log('word', word);
+    
+    const blockedLetterIds = guessedWord.filter(guess => guess.status === 'correct').map(guess => guess.id);
+    console.log('blockedLetterIds', blockedLetterIds);
+
+    const differentPositionGuesses = guessedWord.filter(guess => guess.status === 'different_position');
+    for (const guess of differentPositionGuesses) {
+        console.log('guess', guess);
+            for (let letterId = 0; letterId < word.length; letterId++) {
+                if (blockedLetterIds.includes(letterId) || guess.id === letterId) {
+                    continue;
+                }
+                console.log('letterId', letterId);
+
+                if (guess.letter === word[letterId]) {
+                    console.log('found!', guess.letter);
+                    blockedLetterIds.push(letterId);
+                    // now record that this guess is ok. move on to next guess.
+                    // also make sure that if no matching letter for this guess was found, the whole word is invalid.
+
+                }
+                
+                
+            }
+        
+        
+    }
+    
+    // filter: wrong letters. Loop.
+    // check if the letter is somewhere else.
+    // How to do that?
+
+    return !!(word && guessedWord); // CHANGE THIS
+}
 
 export { findWords };
