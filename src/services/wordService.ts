@@ -17,39 +17,44 @@ function checkCorrectGuesses(word: string, guessedWord: Guess[]) {
 }
 
 function checkIncorrectGuesses(word: string, guessedWord: Guess[]) {
-    console.log('word', word);
-    
     const blockedLetterIds = guessedWord.filter(guess => guess.status === 'correct').map(guess => guess.id);
-    console.log('blockedLetterIds', blockedLetterIds);
-
+    
     const differentPositionGuesses = guessedWord.filter(guess => guess.status === 'different_position');
     for (const guess of differentPositionGuesses) {
-        console.log('guess', guess);
-            for (let letterId = 0; letterId < word.length; letterId++) {
-                if (blockedLetterIds.includes(letterId) || guess.id === letterId) {
-                    continue;
-                }
-                console.log('letterId', letterId);
-
-                if (guess.letter === word[letterId]) {
-                    console.log('found!', guess.letter);
-                    blockedLetterIds.push(letterId);
-                    // now record that this guess is ok. move on to next guess.
-                    // also make sure that if no matching letter for this guess was found, the whole word is invalid.
-
-                }
-                
-                
+        let found = false;
+        for (let letterId = 0; letterId < word.length; letterId++) {
+            if (blockedLetterIds.includes(letterId) || guess.id === letterId) {
+                continue;
             }
-        
-        
-    }
-    
-    // filter: wrong letters. Loop.
-    // check if the letter is somewhere else.
-    // How to do that?
 
-    return !!(word && guessedWord); // CHANGE THIS
+            if (guess.letter === word[letterId]) {
+                blockedLetterIds.push(letterId);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            return false;
+        }
+    }
+
+    const wrongGuesses = guessedWord.filter(guess => guess.status === 'wrong');
+    for (const guess of wrongGuesses) {
+        for (let letterId = 0; letterId < word.length; letterId++) {
+            if (guess.letter === word[guess.id]) {
+                return false;
+            }
+            
+            if (blockedLetterIds.includes(letterId)) {
+                continue;
+            }
+            
+            if (guess.letter === word[letterId]) {
+                return false;
+            }
+        }  
+    }
+    return true;
 }
 
 export { findWords };
