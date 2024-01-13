@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <header>
       <h1>Wordle💡Helper</h1>
-      <p>Get some hints for wordle puzzles!</p>
+      <h2>Get some hints for wordle puzzles!</h2>
     </header>
   )
 }

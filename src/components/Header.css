@@ -2,6 +2,11 @@ header {
     margin: 15px auto;
 }
 
-h1, p {
+h1, h2 {
     text-align: center;
+}
+
+h2 {
+    font-size: 1.2em;
+    font-weight: normal;
 }
