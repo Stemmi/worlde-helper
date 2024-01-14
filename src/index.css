@@ -1,0 +1,23 @@
+:root {
+  --default-bright-color: #f0f0f0;
+  --default-brighter-color: white;
+  --default-dark-color: #0f0f0f;
+  --default-darker-color: black;
+  --highlight-dark-color: red;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--default-bright-color);
+  color: var(--default-dark-color);
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#root {
+  margin: 0 auto;
+}

@@ -1,0 +1,13 @@
+header {
+    margin: 15px auto;
+    width: 380px;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.2em;
+    font-weight: normal;
+}
