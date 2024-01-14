@@ -1,8 +1,16 @@
 main {
-    display: flex;
+    width: 380px;
+    margin: auto;
 }
 
 section {
     width: 380px;
     margin: 10px;
+}
+
+@media screen and (min-width: 992px) {
+    main {
+        width: 800px;
+        display: flex;
+    }
 }
