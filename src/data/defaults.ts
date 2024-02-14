@@ -9,3 +9,5 @@ const defaultGuess: Guess[] = [
 ];
 
 export { defaultGuess };
+
+// can be deleted? use initialState instead

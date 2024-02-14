@@ -6,3 +6,5 @@ export interface Guess {
     status: Status,
     used?: boolean
 }
+
+// Use type declarations from features/guessedWord instead!
