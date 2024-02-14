@@ -1,6 +1,6 @@
-import Header from './components/Header'
-import WordleSection from './components/WordleSection'
-import DescriptionSection from './components/DescriptionSection'
+import Header from '../components/Header'
+import WordleSection from '../components/WordleSection'
+import DescriptionSection from '../components/DescriptionSection'
 
 import './App.css'
 
