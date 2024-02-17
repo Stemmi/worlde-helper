@@ -1,11 +1,12 @@
+import { useSelector, useDispatch } from 'react-redux';
+
+import { updateLetterValue, updateLetterStatus } from '../features/guessedWord/guessedWordSlice';
+// import { updateLetterValue, updateLetterStatus, reset } from '../features//guessedWord/guessedWordSlice';
+
 import LetterInput from './LetterInput';
 import StatusInput from './StatusInput';
 
 import type { RootState } from '../app/store';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateLetterValue, updateLetterStatus } from '../features/guessedWord/guessedWordSlice';
-// import { updateLetterValue, updateLetterStatus, reset } from '../features//guessedWord/guessedWordSlice';
-
 
 interface WordleTableProps {
     // guessedWord: Guess[]

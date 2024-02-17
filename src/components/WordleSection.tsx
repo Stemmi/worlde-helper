@@ -1,12 +1,16 @@
+import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import './WordleSection.css';
 import WordleTable from './WordleTable';
 import ResultDiv from './ResultDiv';
 import { findWords } from '../services/wordService';
-import { defaultGuess } from '../data/defaults';
+import { reset } from '../features//guessedWord/guessedWordSlice';
+import type { RootState } from '../app/store';
 
-export default function WordleSection() {    
-    const [ guessedWord, setGuessedWord ] = useState(defaultGuess.map(obj => ({...obj})));
+export default function WordleSection() {   
+    const guessedWord = useSelector((state: RootState) => state.guessedWord);
+    const dispatch = useDispatch();
+    
     const [ selectedInput, setSelectedInput ] = useState<number | undefined>(0);
     const [ result, setResult ] = useState<string[]>([]);
 
@@ -45,8 +49,7 @@ export default function WordleSection() {
     }
 
     function handleReset() {
-        const resettedGuess = defaultGuess.map(obj => ({...obj}));
-        setGuessedWord(resettedGuess);
+        dispatch(reset());
         setSelectedInput(0);
         setResult([]);
     }
@@ -56,9 +59,7 @@ export default function WordleSection() {
             <WordleTable
                 // guessedWord={guessedWord}
                 selectedInput={selectedInput}
-                // onLetterChange={handleLetterChange}
                 onInputSelection={handleSelection}
-                // onStatuschange={handleStatusChange}
             />
             <div className="button_container">
                 <button onClick={handleOk}>OK</button>
