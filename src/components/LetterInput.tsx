@@ -1,10 +1,15 @@
 import { useRef, useEffect, useState } from 'react';
 import { Guess } from '../types/guess';
 
+interface OnLetterChangeProps {
+    id: number
+    letter: string
+}
+
 interface LetterInputProps {
     guess: Guess
     isSelected: boolean
-    onLetterChange: (id: number, letter: string) => void
+    onLetterChange: ({ id, letter }: OnLetterChangeProps) => void
     onSelect: (id: number) => void
     onDeselect: (id: number) => void
 }
@@ -25,7 +30,10 @@ export default function LetterInput({ guess, isSelected, onLetterChange, onSelec
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         event.preventDefault();
-        onLetterChange(guess.id, event.target.value);
+        onLetterChange({
+            id: guess.id,
+            letter: event.target.value
+        });
     }
 
     function handleFocus() {

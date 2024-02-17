@@ -1,17 +1,23 @@
-// import './WordleSection.css';
 import LetterInput from './LetterInput';
 import StatusInput from './StatusInput';
-import { Guess, Status } from '../types/guess';
+
+import type { RootState } from '../app/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateLetterValue, updateLetterStatus } from '../features/guessedWord/guessedWordSlice';
+// import { updateLetterValue, updateLetterStatus, reset } from '../features//guessedWord/guessedWordSlice';
+
 
 interface WordleTableProps {
-    guessedWord: Guess[]
+    // guessedWord: Guess[]
     selectedInput: number | undefined
-    onLetterChange: (id: number, letter: string) => void
+    // onLetterChange: (id: number, letter: string) => void
     onInputSelection: (id: number | undefined) => void
-    onStatuschange: (id: number, status: Status) => void
+    // onStatuschange: (id: number, status: Status) => void
 }
 
-export default function WordleTable({guessedWord, selectedInput, onLetterChange, onInputSelection, onStatuschange}: WordleTableProps) {    
+export default function WordleTable({ selectedInput, onInputSelection }: WordleTableProps) {    
+    const guessedWord = useSelector((state: RootState) => state.guessedWord);
+    const dispatch = useDispatch();
 
     function handleSelection(id: number) {
         onInputSelection(id);
@@ -26,7 +32,7 @@ export default function WordleTable({guessedWord, selectedInput, onLetterChange,
             <LetterInput
                 isSelected={selectedInput===guess.id}
                 guess={guess}
-                onLetterChange={onLetterChange}
+                onLetterChange={(payload)=>dispatch(updateLetterValue(payload))}
                 onSelect={handleSelection}
                 onDeselect={handleDeselection}
             />
@@ -38,7 +44,7 @@ export default function WordleTable({guessedWord, selectedInput, onLetterChange,
             <StatusInput
                 id={guess.id}
                 status={guess.status}
-                onStatusChange={onStatuschange}
+                onStatusChange={(payload)=>dispatch(updateLetterStatus(payload))}
             />
         </td>
     );
