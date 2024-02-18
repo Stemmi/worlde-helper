@@ -14,7 +14,7 @@ interface StatusInputProps {
 export default function StatusInput({ id, status, onStatusChange }: StatusInputProps) {    
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         const newStatus = event.target.value as Status;
-        onStatusChange({id: id, status: newStatus})
+        onStatusChange({id: id, status: newStatus});
     }
     
     return (

@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { Guess } from '../types/guess';
 
-interface OnLetterChangeProps {
+export interface OnLetterChangeProps {
     id: number
     letter: string
 }

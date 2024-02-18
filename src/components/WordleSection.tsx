@@ -4,14 +4,16 @@ import './WordleSection.css';
 import WordleTable from './WordleTable';
 import ResultDiv from './ResultDiv';
 import { findWords } from '../services/wordService';
-import { reset } from '../features//guessedWord/guessedWordSlice';
+import { reset } from '../features/guessedWordSlice';
+import { resetSelection } from '../features/selectedInputSlice';
 import type { RootState } from '../app/store';
 
 export default function WordleSection() {   
     const guessedWord = useSelector((state: RootState) => state.guessedWord);
+    const selectedInput = useSelector((state: RootState) => state.selectedInput);
     const dispatch = useDispatch();
     
-    const [ selectedInput, setSelectedInput ] = useState<number | undefined>(0);
+    // const [ selectedInput, setSelectedInput ] = useState<number | undefined>(0);
     const [ result, setResult ] = useState<string[]>([]);
 
     // function handleLetterChange(id: number, letter: string) {
@@ -22,21 +24,6 @@ export default function WordleSection() {
     //     selectNext();
     //     setGuessedWord(newGuessedWord);
     // }
-
-    // function selectNext() {
-    //     if (selectedInput === undefined) {
-    //         return;
-    //     } else if (selectedInput >= 4) {
-    //         setSelectedInput(undefined);
-    //     } else {
-    //         const nextInput = selectedInput + 1;
-    //         setSelectedInput(nextInput);
-    //     }
-    // }
-
-    function handleSelection(id: number | undefined) {
-        setSelectedInput(id);
-    }
 
     // function handleStatusChange(id: number, status: Status) {
     //     const newGuessedWord = guessedWord.map(obj => ({...obj}));
@@ -50,7 +37,7 @@ export default function WordleSection() {
 
     function handleReset() {
         dispatch(reset());
-        setSelectedInput(0);
+        dispatch(resetSelection());
         setResult([]);
     }
 
@@ -59,7 +46,7 @@ export default function WordleSection() {
             <WordleTable
                 // guessedWord={guessedWord}
                 selectedInput={selectedInput}
-                onInputSelection={handleSelection}
+                // onInputSelection={handleSelection}
             />
             <div className="button_container">
                 <button onClick={handleOk}>OK</button>
