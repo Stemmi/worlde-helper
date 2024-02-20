@@ -1,14 +1,20 @@
-import { Status } from "../types/guess"
+import type { Status } from "../features/guessedWordSlice";
+
+interface OnLetterStatusChangeProps {
+    id: number
+    status: Status
+}
 
 interface StatusInputProps {
     id: number,
     status: Status,
-    onStatusChange: (id: number, status: Status) => void
+    onStatusChange: ({id, status}: OnLetterStatusChangeProps) => void
 }
 
 export default function StatusInput({ id, status, onStatusChange }: StatusInputProps) {    
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        onStatusChange(id, event.target.value as Status)
+        const newStatus = event.target.value as Status;
+        onStatusChange({id: id, status: newStatus});
     }
     
     return (

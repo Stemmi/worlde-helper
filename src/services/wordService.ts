@@ -1,12 +1,12 @@
-import { words } from '../data/words';
-import { Guess } from '../types/guess';
+import { words } from './words';
+import type { GuessedLetter } from '../features/guessedWordSlice';
 
-function findWords(guessedWord: Guess[]) {
+function findWords(guessedWord: GuessedLetter[]) {
     return words.filter(word => checkCorrectGuesses(word, guessedWord)
                                 && checkIncorrectGuesses(word, guessedWord));
 }
 
-function checkCorrectGuesses(word: string, guessedWord: Guess[]) {
+function checkCorrectGuesses(word: string, guessedWord: GuessedLetter[]) {
     const correctGuesses = guessedWord.filter(guess => guess.status === 'correct');
     for (const correctGuess of correctGuesses) {
         if (word[correctGuess.id] !== correctGuess.letter) {
@@ -16,7 +16,7 @@ function checkCorrectGuesses(word: string, guessedWord: Guess[]) {
     return true;
 }
 
-function checkIncorrectGuesses(word: string, guessedWord: Guess[]) {
+function checkIncorrectGuesses(word: string, guessedWord: GuessedLetter[]) {
     const blockedLetterIds = guessedWord.filter(guess => guess.status === 'correct').map(guess => guess.id);
     
     const differentPositionGuesses = guessedWord.filter(guess => guess.status === 'different_position');

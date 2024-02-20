@@ -1,71 +1,39 @@
-import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { reset } from '../features/guessedWordSlice';
+import { resetSelection } from '../features/selectedInputSlice';
+import { resetResult } from '../features/resultSlice';
+import { updateResult } from '../features/resultSlice';
+
 import './WordleSection.css';
+
 import WordleTable from './WordleTable';
 import ResultDiv from './ResultDiv';
-import { Status } from '../types/guess';
-import { findWords } from '../services/wordService';
-import { defaultGuess } from '../data/defaults';
 
-export default function WordleSection() {    
-    const [ guessedWord, setGuessedWord ] = useState(defaultGuess.map(obj => ({...obj})));
-    const [ selectedInput, setSelectedInput ] = useState<number | undefined>(0);
-    const [ result, setResult ] = useState<string[]>([]);
+import type { RootState } from '../app/store';
 
-    function handleLetterChange(id: number, letter: string) {
-        const pattern = /[a-zA-Z]/;
-        if (!pattern.test(letter)) return;
-        const newGuessedWord = guessedWord.map(obj => ({...obj}));
-        newGuessedWord[id].letter = letter.toUpperCase();
-        selectNext();
-        setGuessedWord(newGuessedWord);
-    }
-
-    function selectNext() {
-        if (selectedInput === undefined) {
-            return;
-        } else if (selectedInput >= 4) {
-            setSelectedInput(undefined);
-        } else {
-            const nextInput = selectedInput + 1;
-            setSelectedInput(nextInput);
-        }
-    }
-
-    function handleSelection(id: number | undefined) {
-        setSelectedInput(id);
-    }
-
-    function handleStatusChange(id: number, status: Status) {
-        const newGuessedWord = guessedWord.map(obj => ({...obj}));
-        newGuessedWord[id].status = status;
-        setGuessedWord(newGuessedWord);
-    }
-
-    function handleOk() { 
-        setResult(findWords(guessedWord));
+export default function WordleSection() {   
+    const guessedWord = useSelector((state: RootState) => state.guessedWord);
+    const dispatch = useDispatch();
+    
+    function handleOk() {
+        dispatch(updateResult(guessedWord));
     }
 
     function handleReset() {
-        const resettedGuess = defaultGuess.map(obj => ({...obj}));
-        setGuessedWord(resettedGuess);
-        setSelectedInput(0);
-        setResult([]);
+        dispatch(reset());
+        dispatch(resetSelection());
+        dispatch(resetResult());
     }
 
     return (
         <section>
-            <WordleTable
-                guessedWord={guessedWord}
-                selectedInput={selectedInput}
-                onLetterChange={handleLetterChange}
-                onInputSelection={handleSelection}
-                onStatuschange={handleStatusChange}
-            />
+            <WordleTable />
             <div className="button_container">
                 <button onClick={handleOk}>OK</button>
                 <button onClick={handleReset} >Reset</button>
             </div>
-            <ResultDiv result={result} />
+            <ResultDiv />
         </section>
     )
 }
