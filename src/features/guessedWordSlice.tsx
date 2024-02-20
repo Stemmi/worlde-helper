@@ -5,8 +5,7 @@ export type Status = 'unknown' | 'correct' | 'wrong' | 'different_position';
 export interface GuessedLetter {
     id: number,
     letter: string,
-    status: Status,
-    used?: boolean
+    status: Status
 }
 
 const initialState: GuessedLetter[] = [
@@ -24,8 +23,6 @@ export const guessedWordSlice = createSlice({
         updateLetterValue: (state, action) => {
             const id = action.payload.id;
             const letter = action.payload.letter;
-            const pattern = /[a-zA-Z]/;
-            if (!pattern.test(letter)) return state;
             state[id].letter = letter.toUpperCase();
         },
         updateLetterStatus: (state, action) => {

@@ -10,13 +10,11 @@ export const selectedInputSlice = createSlice({
             state = action.payload;
             return state;
         },
-        resetSelection: (state: number) => {
-            state = initialState;
-            return state;
+        resetSelection: () => {
+            return initialState;
         },
-        setSelectionToNone: (state: number) => {
-            state = -1;
-            return state;
+        setSelectionToNone: () => {
+            return -1;
         },
         selectNext(state: number) {
             if (state === -1 || state >= 4) {

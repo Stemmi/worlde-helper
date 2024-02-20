@@ -11,9 +11,8 @@ export const resultSlice = createSlice({
             state = findWords(action.payload);
             return state;
         },
-        resetResult(state: string[]) {
-            state = initialState;
-            return state;
+        resetResult() {
+            return initialState;
         }
     }
 });

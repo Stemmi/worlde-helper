@@ -1,6 +1,5 @@
 import './DescriptionSection.css';
 
-
 export default function DescriptionSection() {    
         
     return (

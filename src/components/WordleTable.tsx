@@ -18,7 +18,6 @@ export default function WordleTable() {
         dispatch(setSelection(id));
     }
 
-    // IS THIS REALLY NEEDED?
     function handleDeselection(id: number) {
         if (selectedInput === id) dispatch(setSelectionToNone());
     }
