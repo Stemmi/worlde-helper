@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { Guess } from '../types/guess';
+import type { GuessedLetter } from '../features/guessedWordSlice';
 
 export interface OnLetterChangeProps {
     id: number
@@ -7,7 +7,7 @@ export interface OnLetterChangeProps {
 }
 
 interface LetterInputProps {
-    guess: Guess
+    guess: GuessedLetter
     isSelected: boolean
     onLetterChange: ({ id, letter }: OnLetterChangeProps) => void
     onSelect: (id: number) => void

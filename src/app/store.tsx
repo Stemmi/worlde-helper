@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import guessedWordReducer from '../features/guessedWordSlice';
 import selectedInputReducer from '../features/selectedInputSlice';
+import resultReducer from "../features/resultSlice";
 
 export const store = configureStore({
     reducer: {
         guessedWord: guessedWordReducer,
-        selectedInput: selectedInputReducer
+        selectedInput: selectedInputReducer,
+        result: resultReducer
     }
 });
 

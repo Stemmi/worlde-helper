@@ -1,4 +1,4 @@
-import { Status } from "../types/guess"
+import type { Status } from "../features/guessedWordSlice";
 
 interface OnLetterStatusChangeProps {
     id: number

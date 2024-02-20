@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 
 import { updateLetterValue, updateLetterStatus } from '../features/guessedWordSlice';
-import { setSelection, setSelectionToNone } from '../features/selectedInputSlice';
+import { setSelection, setSelectionToNone, selectNext } from '../features/selectedInputSlice';
 
 import LetterInput from './LetterInput';
 import StatusInput from './StatusInput';
@@ -9,43 +9,26 @@ import StatusInput from './StatusInput';
 import type { RootState } from '../app/store';
 import type { OnLetterChangeProps } from './LetterInput';
 
-// import type { GuessedLetter } from '../features/guessedWordSlice';
-
-interface WordleTableProps {
-    // guessedWord: Guess[]
-    selectedInput: number | undefined
-    // onLetterChange: (id: number, letter: string) => void
-    // onInputSelection: (id: number | undefined) => void
-    // onStatuschange: (id: number, status: Status) => void
-}
-
-
-
-export default function WordleTable({ selectedInput }: WordleTableProps) {    
+export default function WordleTable() {    
     const guessedWord = useSelector((state: RootState) => state.guessedWord);
+    const selectedInput = useSelector((state: RootState) => state.selectedInput);
     const dispatch = useDispatch();
 
     function handleSelection(id: number | undefined) {
         dispatch(setSelection(id));
     }
 
-    function handleLetterChange(payload: OnLetterChangeProps) {
-        dispatch(updateLetterValue(payload));
-    }
-
-    // function selectNext() {
-    //     if (selectedInput === undefined) {
-    //         return;
-    //     } else if (selectedInput >= 4) {
-    //         dispatch(setSelectionToNone());
-    //     } else {
-    //         const nextInput = selectedInput + 1;
-    //         dispatch(setSelection(nextInput));
-    //     }
-    // }
-
+    // IS THIS REALLY NEEDED?
     function handleDeselection(id: number) {
         if (selectedInput === id) dispatch(setSelectionToNone());
+    }
+
+    function handleLetterChange(payload: OnLetterChangeProps) {
+        const pattern = /[a-zA-Z]/;
+        if (pattern.test(payload.letter)) {
+            dispatch(updateLetterValue(payload));
+            dispatch(selectNext());
+        }
     }
 
     const guessLettersRow = guessedWord.map((guess) => 

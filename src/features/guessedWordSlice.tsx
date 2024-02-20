@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-// import type { PayloadAction } from '@reduxjs/toolkit'
 
 export type Status = 'unknown' | 'correct' | 'wrong' | 'different_position';
 
@@ -9,23 +8,6 @@ export interface GuessedLetter {
     status: Status,
     used?: boolean
 }
-
-// export type GuessedWordState = GuessedLetter[];
-
-// function handleLetterChange(id: number, letter: string) {
-//     const pattern = /[a-zA-Z]/;
-//     if (!pattern.test(letter)) return;
-//     const newGuessedWord = guessedWord.map(obj => ({...obj}));
-//     newGuessedWord[id].letter = letter.toUpperCase();
-//     selectNext();
-//     setGuessedWord(newGuessedWord);
-// }
-
-// function handleStatusChange(id: number, status: Status) {
-//     const newGuessedWord = guessedWord.map(obj => ({...obj}));
-//     newGuessedWord[id].status = status;
-//     setGuessedWord(newGuessedWord);
-// }
 
 const initialState: GuessedLetter[] = [
     { id: 0, letter: '', status: 'unknown' },
@@ -45,13 +27,11 @@ export const guessedWordSlice = createSlice({
             const pattern = /[a-zA-Z]/;
             if (!pattern.test(letter)) return state;
             state[id].letter = letter.toUpperCase();
-            return state;
         },
         updateLetterStatus: (state, action) => {
             const id = action.payload.id;
             const status = action.payload.status;
             state[id].status = status;         
-            return state;
         },
         reset: () => {
             return initialState;
