@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 
-import { reset } from '../features/guessedWordSlice';
+import { resetGuessedWord } from '../features/guessedWordSlice';
 import { resetSelection } from '../features/selectedInputSlice';
 import { resetResult } from '../features/resultSlice';
 import { updateResult } from '../features/resultSlice';
@@ -21,7 +21,7 @@ export default function WordleSection() {
     }
 
     function handleReset() {
-        dispatch(reset());
+        dispatch(resetGuessedWord());
         dispatch(resetSelection());
         dispatch(resetResult());
     }

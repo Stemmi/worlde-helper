@@ -28,14 +28,14 @@ export const guessedWordSlice = createSlice({
         updateLetterStatus: (state, action) => {
             const id = action.payload.id;
             const status = action.payload.status;
-            state[id].status = status;         
+            state[id].status = status;
         },
-        reset: () => {
+        resetGuessedWord: () => {
             return initialState;
         }
     }
 });
 
-export const { updateLetterValue, updateLetterStatus, reset } = guessedWordSlice.actions;
+export const { updateLetterValue, updateLetterStatus, resetGuessedWord } = guessedWordSlice.actions;
 
 export default guessedWordSlice.reducer;
