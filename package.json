@@ -20,16 +20,12 @@
     "@types/react-dom": "^18.2.15",
     "@typescript-eslint/eslint-plugin": "^8.6.0",
     "@typescript-eslint/parser": "^8.6.0",
-    "@vitejs/plugin-react": "^4.2.0",
+    "@vitejs/plugin-react": "^6.0.2",
     "eslint": "^8.0.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
     "typescript": "^5.2.2",
-    "vite": "^6.4.2"
-  },
-  "resolutions": {
-    "ip-address": "^10.1.1",
-    "postcss": "^8.5.10"
+    "vite": "^8.0.15"
   },
   "packageManager": "yarn@4.14.1"
 }
