@@ -16,16 +16,17 @@
     "react-redux": "^9.1.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@typescript-eslint/eslint-plugin": "^8.6.0",
     "@typescript-eslint/parser": "^8.6.0",
     "@vitejs/plugin-react": "^6.0.2",
-    "eslint": "^8.0.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint": "^10.5.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.4.4",
     "typescript": "^5.2.2",
-    "vite": "^8.0.15"
+    "vite": "^8.1.0"
   },
   "packageManager": "yarn@4.14.1"
 }
