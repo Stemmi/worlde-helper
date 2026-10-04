@@ -25,3 +25,6 @@ dist-ssr
 
 # Notes
 notes.odt
+
+# Other
+.yarn/install-state.gz
